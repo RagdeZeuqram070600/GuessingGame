@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Matching Game</title>
+    <style>
+        div {
+            position:absolute; width: 500px; height: 500px;
+        }
+
+        img {
+            position:absolute; width:100px; height:100px;
+        }
+
+        #rightSide {
+            left:500px; border-left: 1px solid black;
+        }
+
+        html {
+            background-image: url("http://25.media.tumblr.com/30e78052dcb787a1f455169eb3a0d952/tumblr_mhar1bCrXx1ra9rp4o1_250.gif");
+        }
+
+        .font {
+            color: blue;
+        }
+
+    </style>
+</head>
+<body onload="generateFaces()">
+<audio controls>
+    <source src="snoop.mp3">
+</audio>
+<h1 class="font"> Matching Game</h1>
+<h3 class="font">Click on the extra Crip on the left</h3>
+<div id="leftSide"></div>
+<div id="rightSide"></div>
+
+<script>
+    var faces = 5;
+    var leftSide = document.getElementById("leftSide");
+    var rightSide = document.getElementById("rightSide");
+
+    function generateFaces() {
+        for (var i = 0; i < faces; i++) {
+
+            var top = Math.floor(Math.random()*401);
+            var left = Math.floor(Math.random()*401);
+            var img = document.createElement("img");
+
+            img.setAttribute("src","https://media.giphy.com/media/TeBpzQZRaBIC4/giphy.gif");
+            img.style.top = top + "px";
+            img.style.left = left + "px";
+            leftSide.appendChild(img);
+            leftSideImages = leftSide.cloneNode(true);
+            leftSideImages.removeChild(leftSideImages.lastChild);
+            rightSide.appendChild(leftSideImages);
+        }
+        var theBody = document.getElementsByTagName("body")[0];
+        leftSide.lastChild.onclick = function nextLevel(event) {
+            event.stopPropagation();
+            while (leftSide.firstChild) {
+                leftSide.removeChild(leftSide.firstChild);
+            }
+            while (rightSide.firstChild) {
+                rightSide.removeChild(rightSide.firstChild);
+            }
+            faces += 5;
+            generateFaces();
+        };
+        theBody.onclick = function gameOver() {
+            alert("Game Over!");
+            theBody.onclick = null;
+            leftSide.lastChild.onclick = null;
+        };
+    }
+
+
+</script>
+
+</body>
+</html>
